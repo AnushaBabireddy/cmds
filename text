@@ -1,0 +1,20 @@
+
+
+**Force deleting the terminated pods**:
+
+  for i in $(kubectl get po -n mirth-connect |grep -i "Terminating" | awk '{print $1}'); do echo $i; done
+  for i in $(kubectl get po -n mirth-connect |grep -i "Terminating" | awk '{print $1}'); do kubectl delete pod $i; done
+
+
+ kubectl delete pod <PODNAME> --grace-period=0 --force --namespace <NAMESPACE>
+
+
+ **Tried uninstalling and reinstalling in other path** : Issue with disk space in server
+
+  helm delete -n longhorn-system longhorn
+  
+  k logs -fn longhorn-system longhorn-uninstall-hf
+  
+  helm delete -n longhorn-system longhorn
+
+ helm upgrade --install -n longhorn-system longhorn longhorn/longhorn  --value ./longvalue.yaml
